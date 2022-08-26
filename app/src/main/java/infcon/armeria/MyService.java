@@ -23,6 +23,7 @@ public final class MyService implements HttpService {
             System.err.println(resp.contentUtf8());
             // event loop
             final HttpResponse response = resp.toHttpResponse(); // 콜백 안에 있어서 못보냄 ㅠㅠ
+            future.complete(response);//<- 완성되면 future채워줌
         });
 
         final HttpResponse res = HttpResponse.from(future); // <-
