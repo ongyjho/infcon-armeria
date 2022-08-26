@@ -24,7 +24,7 @@ class BackendTest {
             System.err.println("In call back Thread: " + Thread.currentThread().getName());
             System.err.println(res.contentUtf8());
 
-            sendBackToTheOriginalClient(res);
+            sendBackToTheOriginalClient(res); // 종료하고, 쓰레드는 놓아줌
         }).join();
 
         try {
