@@ -9,7 +9,9 @@ import java.util.concurrent.CompletableFuture;
 public final class Main {
 
     public static void main(String[] args) {
-        final ServerBuilder serverBuilder = Server.builder();
+        final Backend foo = Backend.of("foo", 8080);
+        foo.start();
+
 
         final Server server = serverBuilder.http(8080).service("/infcon", new MyService()).build();
 
