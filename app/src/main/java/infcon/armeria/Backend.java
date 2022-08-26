@@ -14,7 +14,7 @@ public final class Backend {
     private final Server server;
 
     private Backend(String name, int port) {
-        server = Server.builder().http(port).service("/foo", (ctx, req) -> {
+        server = Server.builder().http(port).service("/bar", (ctx, req) -> {
             final HttpResponse res = HttpResponse.of("Hello, from" + name + "!");
             return HttpResponse.delayed(res, Duration.ofSeconds(3));
         }).build();

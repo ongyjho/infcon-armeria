@@ -13,9 +13,14 @@ public final class Main {
         final Backend foo = Backend.of("foo", 8080);
         foo.start();
 
+        final Backend bar = Backend.of("bar", 9000);
+        bar.start();
+
         final WebClient client = WebClient.of("http://localhost:8080");
+        final WebClient barClient = WebClient.of("http://localhost:9000");
         final ServerBuilder serverBuilder = Server.builder();
-        final Server server = serverBuilder.http(8080).service("/infcon", new MyService(client)).build();
+
+        final Server server = serverBuilder.http(8080).service("/infcon", new MyService(client, barClient)).build();
 
         final CompletableFuture<Void> serverFuture = server.start();
         serverFuture.join();

@@ -12,18 +12,23 @@ public final class MyService implements HttpService {
 
     private WebClient fooClient;
 
-    public MyService(WebClient fooClient) {
+    private WebClient barClient;
+
+    public MyService(WebClient fooClient, WebClient barClient) {
         this.fooClient = fooClient;
+        this.barClient = barClient;
     }
 
     @Override
     public HttpResponse serve(ServiceRequestContext ctx, HttpRequest req) throws Exception {
         final CompletableFuture<HttpResponse> future = new CompletableFuture<>();
         fooClient.get("/foo").aggregate().thenAccept(resp -> {
-            System.err.println(resp.contentUtf8());
-            // event loop
-            final HttpResponse response = resp.toHttpResponse(); // 콜백 안에 있어서 못보냄 ㅠㅠ
-            future.complete(response);//<- 완성되면 future채워줌
+            barClient.get("/bar").aggregate().thenAccept(barResp -> {
+                final HttpResponse response = HttpResponse.of(
+                        resp.contentUtf8() + barResp.contentUtf8());
+                future.complete(response);//<- 완성되면 future채워줌
+
+            });
         });
 
         final HttpResponse res = HttpResponse.from(future); // <-
