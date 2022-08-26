@@ -24,7 +24,7 @@ class BackendTest {
             System.err.println("In call back Thread: " + Thread.currentThread().getName());
             System.err.println(res.contentUtf8());
 
-            sendBackToTheOriginalClient(res); // 종료하고, 쓰레드는 놓아줌
+            sendBackToTheOriginalClient(res); // 종료하고, 쓰레드는 놓아아
         }).join();
 
         try {
@@ -35,7 +35,7 @@ class BackendTest {
     }
 
     private void sendBackToTheOriginalClient(AggregatedHttpResponse res) {
-
+        //요기서 알맹이가 채워지고, 채워진 뒤에 원래의 요청 클라이언트로 전송한다.
     }
 
 }
