@@ -11,9 +11,7 @@ public final class Main {
     public static void main(String[] args) {
         final ServerBuilder serverBuilder = Server.builder();
 
-        final Server server = serverBuilder.http(8080).service("/infcon", (ctx, req) -> {
-            return HttpResponse.of("Hello, Armeria!");
-        }).build();
+        final Server server = serverBuilder.http(8080).service("/infcon", new MyService()).build();
 
         final CompletableFuture<Void> serverFuture = server.start();
         serverFuture.join();
